@@ -1,4 +1,5 @@
 import re
+import unicodedata
 
 from .utils.persian_numbers2text import replace_numbers_with_persian_words
 
@@ -33,6 +34,7 @@ replacements = {
 
 
 def persian_normalizer(text):
+    text = unicodedata.normalize("NFKC", text)
     for src, dest in replacements.items():
         text = text.replace(src, dest)
 
@@ -61,7 +63,7 @@ def persian_normalizer(text):
 
 
 def persian_normalizer_no_punc(text):
-
+    text = unicodedata.normalize("NFKC", text)
     for src, dest in replacements.items():
         text = text.replace(src, dest)
 
@@ -81,7 +83,7 @@ def persian_normalizer_no_punc(text):
 
 
 def persian_normalizer_no_punc_with_digit_replacement(text):
-
+    text = unicodedata.normalize("NFKC", text)
     for src, dest in replacements.items():
         text = text.replace(src, dest)
 
@@ -103,7 +105,7 @@ def persian_normalizer_no_punc_with_digit_replacement(text):
 
 
 def persian_normalizer_no_punc_no_digit(text):
-
+    text = unicodedata.normalize("NFKC", text)
     for src, dest in replacements.items():
         text = text.replace(src, dest)
 
