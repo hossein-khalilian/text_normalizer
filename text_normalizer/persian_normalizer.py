@@ -58,21 +58,13 @@ def persian_normalizer_no_punc(text):
     for src, dest in replacements.items():
         text = text.replace(src, dest)
 
-    text = re.sub("\u200c", " ", text)
-
     allowed_pattern = re.compile(
-        r"[^"
-        r"ئآابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی"
-        r"a-zA-Z"
-        r"0-9۰-۹"
-        r"\s"
-        r"\u200c"
-        r"]"
+        r"[^" r"ئآابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی" r"a-zA-Z" r"0-9۰-۹" r"\s\u200c" r"]"
     )
     text = allowed_pattern.sub("", text)
-
     text = re.sub(r"[ ]{2,}", " ", text)
     text = re.sub(r"[\u200c]{2,}", "\u200c", text)
+
     persian_digits = "۰۱۲۳۴۵۶۷۸۹"
     english_digits = "0123456789"
     for pd, ed in zip(persian_digits, english_digits):
@@ -107,8 +99,6 @@ def persian_normalizer_no_punc_no_digit(text):
 
     for src, dest in replacements.items():
         text = text.replace(src, dest)
-
-    text = re.sub("\u200c", " ", text)
 
     allowed_pattern = re.compile(
         r"[^" r"ئآابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی" r"a-zA-Z" r"\s" r"\u200c" r"]"
