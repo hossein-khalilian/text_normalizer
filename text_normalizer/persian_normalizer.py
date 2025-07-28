@@ -107,3 +107,27 @@ def persian_normalizer_no_punc_no_digit(text):
     text = re.sub(r"[ ]{2,}", " ", text)
 
     return text.strip()
+
+
+def normalize_persian_halfspace(text):
+    zwnj = "\u200c"
+
+    # Rule 1: می + verb
+    text = re.sub(r"\bمی(?=[\u0600-\u06FF]{2,})", f"می{zwnj}", text)
+
+    # Rule 2: نمی + verb
+    text = re.sub(r"\bنمی(?=[\u0600-\u06FF]{2,})", f"نمی{zwnj}", text)
+
+    # Rule 3: noun + ها (plural)
+    text = re.sub(r"(?<=[\u0600-\u06FF])ها\b", f"{zwnj}ها", text)
+    text = re.sub(r"(?<=[\u0600-\u06FF])های\b", f"{zwnj}های", text)
+
+    # Rule 4: noun/adjective + ی (sometimes compound forms)
+    text = re.sub(r"(?<=[\u0600-\u06FF])یی\b", f"{zwnj}یی", text)
+
+    # Rule 5: avoid double ZWNJ if already there
+    text = re.sub(f"{zwnj}+", zwnj, text)
+
+    text = re.sub(r"(?<=[\u0600-\u06FF])ه(?=ی\b)", f"ه{zwnj}", text)
+
+    return text
