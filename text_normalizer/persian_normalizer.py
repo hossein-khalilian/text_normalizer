@@ -1,6 +1,6 @@
 import re
 
-from utils.persian_numbers2text import replace_numbers_with_persian_words
+from .utils.persian_numbers2text import replace_numbers_with_persian_words
 
 replacements = {
     "أ": "ا",
